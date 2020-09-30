@@ -7,6 +7,8 @@ const buildPath = path.join(__dirname, "build");
 console.log('React app build path: ', buildPath);
 server.use(express.static( buildPath));
 
+console.log('Backend URL: ', process.env.REACT_APP_SERVER_URL);
+
 //Handle the health check
 server.use('/health', (req, res, next) => {
     console.log('Health test...');
