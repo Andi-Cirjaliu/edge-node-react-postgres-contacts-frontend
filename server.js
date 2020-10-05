@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// const ejs = require('ejs');
 const hbs = require('hbs');
 
 //The express server
@@ -9,6 +8,7 @@ const server = express();
 const buildPath = path.join(__dirname, "build");
 // console.log('React app build path: ', buildPath);
 
+//Serve the static files also
 server.use(express.static(buildPath, {index: 'fake_index.html'}) );
 server.use("/static", express.static(path.join(buildPath, "static")));
 
@@ -23,10 +23,6 @@ console.log('NODE_ENV: ', NODE_ENV);
 console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL, ', SERVER_URL:', SERVER_URL);
 const BACKEND_URL = NODE_ENV === 'development' ? REACT_APP_SERVER_URL : SERVER_URL;
 console.log('Backend URL: ', BACKEND_URL);
-
-// server.set('view engine', 'ejs');
-// server.engine('html', ejs.renderFile);
-// server.set('views', 'build');
 
 // server.set('view engine', 'hbs');
 server.set('view engine', 'html');
@@ -45,9 +41,6 @@ server.use('/*', (req, res) =>{
     // res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-//Serve the static files also
-// server.use(express.static(buildPath));
-// server.use("/static", express.static(path.join(buildPath, "static")));
 
 const PORT = process.env.PORT || 3000;
 
