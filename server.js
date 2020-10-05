@@ -13,16 +13,11 @@ server.use(express.static(buildPath, {index: 'fake_index.html'}) );
 server.use("/static", express.static(path.join(buildPath, "static")));
 
 // console.log(process.env);
-let {NODE_ENV} = process.env;
-const {REACT_APP_SERVER_URL, SERVER_URL} = process.env;
+const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV: 'development';
 console.log('NODE_ENV: ', NODE_ENV);
-if ( ! NODE_ENV ) {
-    NODE_ENV = 'development';
-}
-console.log('NODE_ENV: ', NODE_ENV);
-console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL, ', SERVER_URL:', SERVER_URL);
-const BACKEND_URL = NODE_ENV === 'development' ? REACT_APP_SERVER_URL : SERVER_URL;
-console.log('Backend URL: ', BACKEND_URL);
+
+const {REACT_APP_SERVER_URL} = process.env;
+console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL);
 
 // server.set('view engine', 'hbs');
 server.set('view engine', 'html');
@@ -37,7 +32,8 @@ server.use('/health', (req, res, next) => {
 
 server.use('/*', (req, res) =>{
     console.log('requested ', req.url);
-    res.render('index', {SERVER_URL});
+    // console.log('Set SERVER_URL to ', REACT_APP_SERVER_URL);
+    res.render('index', {SERVER_URL: REACT_APP_SERVER_URL});
     // res.sendFile(path.join(buildPath, 'index.html'));
 });
 

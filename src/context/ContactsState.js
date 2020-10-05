@@ -15,18 +15,14 @@ import {
 import contactsReducer from './contactsReducer';
 import ContactsContext from './contactsContext';
 
-let {NODE_ENV} = process.env;
-console.log('NODE_ENV: ', NODE_ENV);
-if ( ! NODE_ENV ) {
-    NODE_ENV = 'development';
-}
+const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV: 'development';
 console.log('NODE_ENV: ', NODE_ENV);
 
 const {REACT_APP_SERVER_URL} = process.env;
-const {SERVER_URL} = window;
-console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL, ', SERVER_URL:', SERVER_URL);
+// const {SERVER_URL} = window;
+// console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL);
 
-const BACKEND_URL = NODE_ENV === 'development' ? REACT_APP_SERVER_URL : SERVER_URL;
+const BACKEND_URL = NODE_ENV === 'development' ? REACT_APP_SERVER_URL : window.SERVER_URL;
 console.log('Backend URL: ', BACKEND_URL);
 
 const ContactsState = (props) => {

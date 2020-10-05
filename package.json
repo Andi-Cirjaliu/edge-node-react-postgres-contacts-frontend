@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "SET NODE_ENV=production && node -r dotenv/config server.js",
-    "start_dev": "nodemon -r dotenv/config server.js",
+    "start_dev": "SET NODE_ENV=production && nodemon -r dotenv/config server.js",
     "dev": "react-scripts start",
     "build": "react-scripts -r dotenv/config build",
     "test": "react-scripts test",
