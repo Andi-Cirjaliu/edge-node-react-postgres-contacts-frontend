@@ -15,7 +15,19 @@ import {
 import contactsReducer from './contactsReducer';
 import ContactsContext from './contactsContext';
 
-const SERVER_URL=process.env.REACT_APP_SERVER_URL;
+let {NODE_ENV} = process.env;
+console.log('NODE_ENV: ', NODE_ENV);
+if ( ! NODE_ENV ) {
+    NODE_ENV = 'development';
+}
+console.log('NODE_ENV: ', NODE_ENV);
+
+const {REACT_APP_SERVER_URL} = process.env;
+const {SERVER_URL} = window;
+console.log('REACT_APP_SERVER_URL: ', REACT_APP_SERVER_URL, ', SERVER_URL:', SERVER_URL);
+
+const BACKEND_URL = NODE_ENV === 'development' ? REACT_APP_SERVER_URL : SERVER_URL;
+console.log('Backend URL: ', BACKEND_URL);
 
 const ContactsState = (props) => {
   const INITIAL_STATE = {
@@ -34,7 +46,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.get(`${SERVER_URL}`);
+      const res = await axios.get(`${BACKEND_URL}`);
       const data = res.data;
       console.log(data);
 
@@ -52,7 +64,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.post(`${SERVER_URL}`, contact, {
+      const res = await axios.post(`${BACKEND_URL}`, contact, {
         headers: { "Content-Type": "application/json" },
       });
       const data = res.data;
@@ -72,7 +84,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.put(`${SERVER_URL}/${contact.id}`, contact, {
+      const res = await axios.put(`${BACKEND_URL}/${contact.id}`, contact, {
         headers: { "Content-Type": "application/json" },
       });
       const data = res.data;
@@ -92,7 +104,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.delete(`${SERVER_URL}/${id}`);
+      const res = await axios.delete(`${BACKEND_URL}/${id}`);
       const data = res.data;
       console.log(data);
 
